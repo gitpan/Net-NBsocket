@@ -1,0 +1,100 @@
+NAME
+    Net::NBsocket -- Non-Blocking Sockets
+
+SYNOPSIS
+      use Net::NBsocket qw(
+            open_udpNB
+            open_listenNB
+            connect_NB
+            accept_NB
+            set_NB
+      );
+
+      $sock = open_udpNB();
+      $listener = open_listenNB($port_path);
+      $rv = set_sockNB(*SOCK);
+      $client = connect_NB($port_path,$netaddr);
+      ($sock,$netaddr) = accept_NB(*SERVER);
+    
+DESCRIPTION
+    Net::DNSBL::Utilities contains functions used to build DNSBL emulator
+    daemons.
+
+    * $sock = open_udpNB();
+        Open and return a non-blocking UDP socket object
+
+          input:        none
+          returns:      pointer to socket object
+                        or undef on failure
+
+    * $listener = open_listenNB($port_path);
+        Open and return a non-blocking TCP listener bound to $port_path.
+        Opens a unix-domain socket if port_path is a path instead of a
+        number.
+
+        The user must set the appropriate UMASK prior to calling this
+        routine.
+
+          input:        port or unix domain socket path
+          returns:      pointer to listening socket
+                        object or undef on failure
+
+    * $rv = set_sockNB(*SOCK);
+        Set a socket to Non-Blocking mode
+
+          input:        SOCK object pointer
+          returns:      true on success or
+                        undef on failure
+
+    * $client = connect_NB($port_path,$netaddr);
+        Begin a non-blocking TCP connection to the host designated by
+        $netaddr on $port_path, or to the unix domain socket designated by
+        the path in $port_path. $netaddr is unused for unix domain sockets.
+
+          input:        port number or unix domain socket path,
+                        netaddr as returned by inet_aton
+          returns:      socket object or
+                        undef on failure
+
+    * ($sock,$netaddr) = accept_NB(*SERVER);
+        Accept a connection from a remote client, return a non-blocking
+        socket and the network address of the remote host as returned by
+        inet_aton or the unix domain socket path if PF_INET or PF_UNIX
+        respectively.
+
+          input:        listening socket object
+          returns:      client socket object,
+                        client packed netaddr or
+                        unix domain socket path
+                        or an emtpy array on failure
+
+DEPENDENCIES
+            POSIX
+            Socket
+
+EXPORT_OK
+            open_udpNB
+            open_listenNB
+            connect_NB
+            accept_NB
+            set_NB
+
+AUTHOR
+    Michael Robinton, michael@bizsystems.com
+
+COPYRIGHT
+    Copyright 2004, Michael Robinton & BizSystems This program is free
+    software; you can redistribute it and/or modify it under the terms of
+    the GNU General Public License as published by the Free Software
+    Foundation; either version 2 of the License, or (at your option) any
+    later version.
+
+    This program is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+    Public License for more details.
+
+    You should have received a copy of the GNU General Public License along
+    with this program; if not, write to the Free Software Foundation, Inc.,
+    59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
