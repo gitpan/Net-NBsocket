@@ -6,4 +6,5 @@ Changes
 GPL
 t/open_udpNB.t
 t/tcpux_NB.t
+t/tcplh_NB.t
 t/tcp_NB.t

@@ -11,7 +11,7 @@ SYNOPSIS
       );
 
       $sock = open_udpNB();
-      $listener = open_listenNB($port_path);
+      $listener = open_listenNB($port_path,$netaddr);
       $rv = set_sockNB(*SOCK);
       $client = connect_NB($port_path,$netaddr);
       ($sock,$netaddr) = accept_NB(*SERVER);
@@ -28,14 +28,18 @@ DESCRIPTION
                         or undef on failure
 
     * $listener = open_listenNB($port_path);
-        Open and return a non-blocking TCP listener bound to $port_path.
+        Open and return a non-blocking TCP listener bound to $port_path and
+        an optional IPv4 bind address as returned by inet_aton (defaults to
+        INADDR_ANY).
+
         Opens a unix-domain socket if port_path is a path instead of a
         number.
 
         The user must set the appropriate UMASK prior to calling this
         routine.
 
-          input:        port or unix domain socket path
+          input:        port or unix domain socket path,
+                        [optional] bind address
           returns:      pointer to listening socket
                         object or undef on failure
 

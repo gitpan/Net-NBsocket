@@ -13,7 +13,7 @@ use AutoLoader 'AUTOLOAD';
 require Exporter;
 @ISA = qw(Exporter);
 
-$VERSION = do { my @r = (q$Revision: 0.01 $ =~ /\d+/g); sprintf "%d."."%02d" x $#r, @r };
+$VERSION = do { my @r = (q$Revision: 0.02 $ =~ /\d+/g); sprintf "%d."."%02d" x $#r, @r };
 
 @EXPORT_OK = qw(
         open_udpNB
@@ -47,7 +47,7 @@ Net::NBsocket -- Non-Blocking Sockets
   );
 
   $sock = open_udpNB();
-  $listener = open_listenNB($port_path);
+  $listener = open_listenNB($port_path,$netaddr);
   $rv = set_sockNB(*SOCK);
   $client = connect_NB($port_path,$netaddr);
   ($sock,$netaddr) = accept_NB(*SERVER);
@@ -81,20 +81,26 @@ sub open_udpNB {
 
 =item * $listener = open_listenNB($port_path);
 
-Open and return a non-blocking TCP listener bound to $port_path.
+Open and return a non-blocking TCP listener bound to $port_path and an
+optional IPv4 bind address as returned by inet_aton 
+(defaults to INADDR_ANY).
+
 Opens a unix-domain socket if port_path is a path instead of a number.
 
 The user must set the appropriate UMASK prior to calling this routine.
 
-  input:	port or unix domain socket path
+  input:	port or unix domain socket path,
+		[optional] bind address
   returns:	pointer to listening socket
 		object or undef on failure
 
 =cut
 
 sub open_listenNB {
-  my $port_path = shift;
+  my ($port_path,$addr) = @_;;
   local *LSOCK;
+  $addr = INADDR_ANY unless $addr;
+
   my $path = ($port_path =~ /\D/) ? $port_path : undef;
   my $ok;
   if ($path) {

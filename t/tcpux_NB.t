@@ -54,7 +54,7 @@ mkdir $dir;
 
 my $filename = &{sub{(caller())[1]}};
 
-my $uds = ($filename =~ /tcp_NB/) ? '' : $dir .'/unix_domain_socket';
+my $uds = ($filename =~ /tcpux_NB/) ? $dir .'/unix_domain_socket' : '';
 
 ## test 1 - 2	open a listening TCP socket
 my ($port,$server);
@@ -62,10 +62,18 @@ if ($uds) {				# if testing unix domain socket
   print  STDERR "\tTesting Unix Domain Sockets\n";
   $server = open_listenNB($uds);
   $port = $uds;
-} else {				# else internet domain socket
+} elsif ($filename =~ /tcp_/) {		# else internet domain socket
   print STDERR "\tTesting Internet Domain Sockets\n";
   foreach (10000..10100) {		# find a port to bind to
     if ($server = open_listenNB($_)) {
+      $port = $_;
+      last;
+    }
+  }
+} else {				# internet domain socket with designated address
+  print STDERR "\tTesting 127.0.0.1 Sockets\n";
+  foreach (10000..10100) {		# find a port to bind to
+    if ($server = open_listenNB($_,'127.0.0.1')) {
       $port = $_;
       last;
     }

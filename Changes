@@ -1,4 +1,8 @@
 Revision history for Perl extension Net::NBsocket
 
+0.02  Fri Mar 19 12:54:20 PST 2004
+	add capability to open_listenNB to specify
+	the bind address or default to INADDR_ANY
+
 0.01  Tue Mar  9 12:42:10 PST 2004
 	initial release
