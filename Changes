@@ -1,5 +1,8 @@
 Revision history for Perl extension Net::NBsocket
 
+0.05  Fri Feb  4 20:09:55 PST 2005
+	correct DESCRIPTION for this package
+
 0.04  Sat May  1 11:46:10 PDT 2004
 	socket open calls return immediately on error
 

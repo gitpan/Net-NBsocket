@@ -13,7 +13,7 @@ use AutoLoader 'AUTOLOAD';
 require Exporter;
 @ISA = qw(Exporter);
 
-$VERSION = do { my @r = (q$Revision: 0.04 $ =~ /\d+/g); sprintf "%d."."%02d" x $#r, @r };
+$VERSION = do { my @r = (q$Revision: 0.05 $ =~ /\d+/g); sprintf "%d."."%02d" x $#r, @r };
 
 @EXPORT_OK = qw(
         open_udpNB
@@ -58,8 +58,8 @@ Net::NBsocket -- Non-Blocking Sockets
 
 =head1 DESCRIPTION
 
-B<Net::DNSBL::Utilities> contains functions used to build DNSBL
-emulator daemons.
+B<Net::NBsocket> provides a wrapper for B<Socket> to supply Non-Blocking
+sockets of various flavors;
 
 =over 4
 
