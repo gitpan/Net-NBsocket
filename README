@@ -8,11 +8,13 @@ SYNOPSIS
             connect_NB
             accept_NB
             set_NB
+            set_so_linger
       );
 
       $sock = open_udpNB();
       $listener = open_listenNB($port_path,$netaddr);
       $rv = set_sockNB(*SOCK);
+      $rv = set_so_linger(*HANDLE,$seconds);
       $client = connect_NB($port_path,$netaddr);
       ($sock,$netaddr) = accept_NB(*SERVER);
     
@@ -50,6 +52,12 @@ DESCRIPTION
           returns:      true on success or
                         undef on failure
 
+    $rv = set_so_linger(*HANDLE,$seconds);
+          Set SO_LINGER on top level socket
+
+          input:        *HANDLE, seconds
+          returns:      true = success, false = fail
+
     * $client = connect_NB($port_path,$netaddr);
         Begin a non-blocking TCP connection to the host designated by
         $netaddr on $port_path, or to the unix domain socket designated by
@@ -82,6 +90,7 @@ EXPORT_OK
             connect_NB
             accept_NB
             set_NB
+            set_so_linger
 
 AUTHOR
     Michael Robinton, michael@bizsystems.com

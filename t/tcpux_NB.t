@@ -73,7 +73,7 @@ if ($uds) {				# if testing unix domain socket
 } else {				# internet domain socket with designated address
   print STDERR "\tTesting 127.0.0.1 Sockets\n";
   foreach (10000..10100) {		# find a port to bind to
-    if ($server = open_listenNB($_,'127.0.0.1')) {
+    if ($server = open_listenNB($_,inet_aton('127.0.0.1'))) {
       $port = $_;
       last;
     }

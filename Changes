@@ -1,5 +1,11 @@
 Revision history for Perl extension Net::NBsocket
 
+0.04  Sat May  1 11:46:10 PDT 2004
+	socket open calls return immediately on error
+
+0.03  Wed Mar 31 22:05:56 PST 2004
+	add set_so_linger
+
 0.02  Fri Mar 19 12:54:20 PST 2004
 	add capability to open_listenNB to specify
 	the bind address or default to INADDR_ANY

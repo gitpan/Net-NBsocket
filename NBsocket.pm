@@ -13,7 +13,7 @@ use AutoLoader 'AUTOLOAD';
 require Exporter;
 @ISA = qw(Exporter);
 
-$VERSION = do { my @r = (q$Revision: 0.02 $ =~ /\d+/g); sprintf "%d."."%02d" x $#r, @r };
+$VERSION = do { my @r = (q$Revision: 0.04 $ =~ /\d+/g); sprintf "%d."."%02d" x $#r, @r };
 
 @EXPORT_OK = qw(
         open_udpNB
@@ -21,6 +21,7 @@ $VERSION = do { my @r = (q$Revision: 0.02 $ =~ /\d+/g); sprintf "%d."."%02d" x $
 	connect_NB
 	accept_NB
 	set_NB
+	set_so_linger
 );
 
 # used a lot, create once per session
@@ -44,11 +45,13 @@ Net::NBsocket -- Non-Blocking Sockets
 	connect_NB
 	accept_NB
 	set_NB
+	set_so_linger
   );
 
   $sock = open_udpNB();
   $listener = open_listenNB($port_path,$netaddr);
   $rv = set_sockNB(*SOCK);
+  $rv = set_so_linger(*HANDLE,$seconds);
   $client = connect_NB($port_path,$netaddr);
   ($sock,$netaddr) = accept_NB(*SERVER);
     
@@ -102,18 +105,17 @@ sub open_listenNB {
   $addr = INADDR_ANY unless $addr;
 
   my $path = ($port_path =~ /\D/) ? $port_path : undef;
-  my $ok;
   if ($path) {
-    $ok = socket(LSOCK,PF_UNIX,SOCK_STREAM,0);
+    return undef unless socket(LSOCK,PF_UNIX,SOCK_STREAM,0);
   } else {
-    $ok = socket(LSOCK,PF_INET,SOCK_STREAM,$TCP);
+    return undef unless socket(LSOCK,PF_INET,SOCK_STREAM,$TCP);
   }
-  ($ok = setsockopt(LSOCK,SOL_SOCKET,SO_REUSEADDR,pack("l", 1))) if $ok;
+  my $ok = setsockopt(LSOCK,SOL_SOCKET,SO_REUSEADDR,pack("l", 1));
   if ($path) {
     unlink $path if -e $path && -S $path;
     ($ok = bind(LSOCK,sockaddr_un($path))) if $ok;
   } else {
-    ($ok = bind(LSOCK,sockaddr_in($port_path,INADDR_ANY))) if $ok;
+    ($ok = bind(LSOCK,sockaddr_in($port_path,$addr))) if $ok;
   }
   return *LSOCK if $ok &&
 	listen(LSOCK,SOMAXCONN) &&
@@ -136,6 +138,20 @@ sub set_NB {
   my $sock = shift;
   my $flags = fcntl($sock,F_GETFL(),0);
   fcntl($sock,F_SETFL(),$flags | O_NONBLOCK())
+}
+
+=item $rv = set_so_linger(*HANDLE,$seconds);
+
+  Set SO_LINGER on top level socket
+
+  input:        *HANDLE, seconds
+  returns:      true = success, false = fail
+
+=cut
+
+sub set_so_linger {
+  my ($FH,$sec) = @_;
+  setsockopt($FH,SOL_SOCKET,SO_LINGER,pack("ll",1,$sec));
 }
 
 =item * $client = connect_NB($port_path,$netaddr);
@@ -190,6 +206,7 @@ sub accept_NB {
   my $server = shift;
   local *CLONE;
   my $paddr = accept(CLONE,$server);
+  return () unless $paddr;		# attempted accept with no client
   my($port_path,$netaddr) = eval {sockaddr_in($paddr)};
   if ($@) {
     $netaddr = sockaddr_un($paddr);
@@ -212,6 +229,7 @@ sub accept_NB {
 	connect_NB
 	accept_NB
 	set_NB
+	set_so_linger
 
 =head1 AUTHOR
 
