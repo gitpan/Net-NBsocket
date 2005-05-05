@@ -5,7 +5,7 @@ use strict;
 #use diagnostics;
 
 use vars qw(
-	$VERSION @ISA @EXPORT_OK *UDP *TCP
+	$VERSION @ISA @EXPORT_OK $UDP $TCP
 );
 use POSIX;
 use Socket;
@@ -13,7 +13,7 @@ use AutoLoader 'AUTOLOAD';
 require Exporter;
 @ISA = qw(Exporter);
 
-$VERSION = do { my @r = (q$Revision: 0.05 $ =~ /\d+/g); sprintf "%d."."%02d" x $#r, @r };
+$VERSION = do { my @r = (q$Revision: 0.06 $ =~ /\d+/g); sprintf "%d."."%02d" x $#r, @r };
 
 @EXPORT_OK = qw(
         open_udpNB
@@ -25,8 +25,8 @@ $VERSION = do { my @r = (q$Revision: 0.05 $ =~ /\d+/g); sprintf "%d."."%02d" x $
 );
 
 # used a lot, create once per session
-*UDP = \getprotobyname('udp');
-*TCP = \getprotobyname('tcp');
+$UDP = getprotobyname('udp');
+$TCP = getprotobyname('tcp');
 
 sub DESTROY {};
 

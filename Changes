@@ -1,5 +1,8 @@
 Revision history for Perl extension Net::NBsocket
 
+0.06  Thu May  5 15:48:23 PDT 2005
+	change internal variable from glob to scalar for $TCP, $UDP
+
 0.05  Fri Feb  4 20:09:55 PST 2005
 	correct DESCRIPTION for this package
 
