@@ -1,6 +1,9 @@
 Revision history for Perl extension Net::NBsocket
 
-0.08
+0.09  Wed Jan 11 14:08:33 PST 2006
+	!&8%$#  forgot to turn the autoloader on in 0.08
+
+0.08  Wed Jan 11 12:26:19 PST 2006
 	added complimentary blocking functions for all NB functions
 
 	export_OK inet_aton, inet_ntoa from Socket
