@@ -4,7 +4,9 @@ Makefile.PL
 NBsocket.pm
 Changes
 GPL
+t/inet_sock.t
 t/open_udpNB.t
 t/tcpux_NB.t
 t/tcplh_NB.t
 t/tcp_NB.t
+META.yml                                 Module meta-data (added by MakeMaker)

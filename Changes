@@ -1,5 +1,13 @@
 Revision history for Perl extension Net::NBsocket
 
+0.08
+	added complimentary blocking functions for all NB functions
+
+	export_OK inet_aton, inet_ntoa from Socket
+
+0.07  unreleased
+	correct typo in docs. ITEM said set_sockBN, should say set_NB
+
 0.06  Thu May  5 15:48:23 PDT 2005
 	change internal variable from glob to scalar for $TCP, $UDP
 

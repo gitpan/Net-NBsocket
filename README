@@ -3,33 +3,75 @@ NAME
 
 SYNOPSIS
       use Net::NBsocket qw(
+            open_UDP
             open_udpNB
+            bind2pp
+            open_Listen
             open_listenNB
+            connectBlk
             connect_NB
+            accept_Blk
             accept_NB
             set_NB
             set_so_linger
+            inet_aton
+            inet_ntoa
+            sockaddr_in
+            sockaddr_un
       );
 
+      $sock = open_UDP();
       $sock = open_udpNB();
+      $sock = bind2pp($sock,$port_path,$netaddr);
+      $listener = open_Listen($port_path,$netaddr);
       $listener = open_listenNB($port_path,$netaddr);
-      $rv = set_sockNB(*SOCK);
+      $rv = set_NB(*SOCK);
       $rv = set_so_linger(*HANDLE,$seconds);
+      $client = connectBlk($port_path,$netaddr);
       $client = connect_NB($port_path,$netaddr);
+      ($sock,$netaddr) = accept_Blk(*SERVER);
       ($sock,$netaddr) = accept_NB(*SERVER);
-    
+      $netaddr = inet_aton($dot_quad);
+      $dot_quad = inet_ntoa($netaddr);
+      $sin = sockaddr_in($port,$netaddr);
+      ($port,$netaddr) = sockaddr_in($sin);
+      $sun = sockaddr_un($path);
+      ($path) = sockaddr_un($sun);
+
 DESCRIPTION
     Net::NBsocket provides a wrapper for Socket to supply Non-Blocking
     sockets of various flavors;
 
+    * $netaddr = inet_aton($dot_quad);
+    * $dot_quad = inet_ntoa($netaddr);
+    * $sin = sockaddr_in($port,$netaddr);
+    * ($port,$netaddr) = sockaddr_in($sin);
+    * $sun = sockaddr_un($path);
+    * ($path) = sockaddr_un($sun);
+        All above exported from Socket in the EXPORT_OK array.
+
+    * $sock = open_UDP();
+        Open an unbound UDP socket as below.
+
     * $sock = open_udpNB();
-        Open and return a non-blocking UDP socket object
+        Open and return an unbound non-blocking UDP socket object
 
           input:        none
           returns:      pointer to socket object
                         or undef on failure
 
-    * $listener = open_listenNB($port_path);
+    * $sock = bind2pp($sock,$port_path,$netaddr);
+        Bind to $port_path and an optional IPv4 bind address as returned by
+        inet_aton (defaults to INADDR_ANY).
+
+          input:        port or unix domain socket path,
+                        [optional] bind address
+          returns:      socket on sucess, else undef;
+
+    * $listener = open_Listen($port_path,$netaddr);
+        Open a blocking TCP listner as below.
+
+    * $listener = open_listenNB($port_path,$netaddr);
         Open and return a non-blocking TCP listener bound to $port_path and
         an optional IPv4 bind address as returned by inet_aton (defaults to
         INADDR_ANY).
@@ -45,7 +87,7 @@ DESCRIPTION
           returns:      pointer to listening socket
                         object or undef on failure
 
-    * $rv = set_sockNB(*SOCK);
+    * $rv = set_NB(*SOCK);
         Set a socket to Non-Blocking mode
 
           input:        SOCK object pointer
@@ -58,6 +100,9 @@ DESCRIPTION
           input:        *HANDLE, seconds
           returns:      true = success, false = fail
 
+    * $client = connectBlk($port_path,$netaddr);
+        Begin a blocking TCP connection as below.
+
     * $client = connect_NB($port_path,$netaddr);
         Begin a non-blocking TCP connection to the host designated by
         $netaddr on $port_path, or to the unix domain socket designated by
@@ -67,6 +112,9 @@ DESCRIPTION
                         netaddr as returned by inet_aton
           returns:      socket object or
                         undef on failure
+
+    * ($sock,$netaddr) = accept_Blk(*SERVER);
+        Accept a connection and return a BLOCKING socket as below.
 
     * ($sock,$netaddr) = accept_NB(*SERVER);
         Accept a connection from a remote client, return a non-blocking
@@ -85,20 +133,29 @@ DEPENDENCIES
             Socket
 
 EXPORT_OK
+            open_UDP
             open_udpNB
+            bind2pp
+            open_Listen
             open_listenNB
+            connectBlk
             connect_NB
+            accept_Blk
             accept_NB
             set_NB
             set_so_linger
+            inet_aton
+            inet_ntoa
+            sockaddr_in
+            sockaddr_un
 
 AUTHOR
     Michael Robinton, michael@bizsystems.com
 
 COPYRIGHT
-    Copyright 2004, Michael Robinton & BizSystems This program is free
-    software; you can redistribute it and/or modify it under the terms of
-    the GNU General Public License as published by the Free Software
+    Copyright 2004 - 2006, Michael Robinton & BizSystems This program is
+    free software; you can redistribute it and/or modify it under the terms
+    of the GNU General Public License as published by the Free Software
     Foundation; either version 2 of the License, or (at your option) any
     later version.
 
@@ -110,4 +167,7 @@ COPYRIGHT
     You should have received a copy of the GNU General Public License along
     with this program; if not, write to the Free Software Foundation, Inc.,
     59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+SEE ALSO
+    the POSIX manpage, the Socket manpage
 
