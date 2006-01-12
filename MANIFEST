@@ -4,6 +4,7 @@ Makefile.PL
 NBsocket.pm
 Changes
 GPL
+t/import.t
 t/inet_sock.t
 t/open_udpNB.t
 t/tcpux_NB.t
