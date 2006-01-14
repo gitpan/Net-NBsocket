@@ -13,7 +13,6 @@ END {print "not ok 1\n" unless $loaded;}
 use Net::NBsocket qw(
         open_UDP
         open_udpNB
-        bind2pp
         open_Listen
         open_listenNB
         connectBlk

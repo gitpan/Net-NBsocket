@@ -5,7 +5,6 @@ SYNOPSIS
       use Net::NBsocket qw(
             open_UDP
             open_udpNB
-            bind2pp
             open_Listen
             open_listenNB
             connectBlk
@@ -22,7 +21,7 @@ SYNOPSIS
 
       $sock = open_UDP();
       $sock = open_udpNB();
-      $sock = bind2pp($sock,$port_path,$netaddr);
+      DEPRECATED $sock = bind2pp($sock,$port_path,$netaddr);
       $listener = open_Listen($port_path,$netaddr);
       $listener = open_listenNB($port_path,$netaddr);
       $rv = set_NB(*SOCK);
@@ -60,13 +59,18 @@ DESCRIPTION
           returns:      pointer to socket object
                         or undef on failure
 
-    * $sock = bind2pp($sock,$port_path,$netaddr);
+    * DEPRECATED $sock=bind2pp($sock,$port_path,$netaddr);
         Bind to $port_path and an optional IPv4 bind address as returned by
         inet_aton (defaults to INADDR_ANY).
 
           input:        port or unix domain socket path,
                         [optional] bind address
           returns:      socket on sucess, else undef;
+
+        Author's note: This function was not well thought out and is now
+        deprecated. It may be removed in future versions and is no longer in
+        the EXPORT_OK array though it is still in the module and may be
+        accessed with Net::NBsocket::bind2pp();
 
     * $listener = open_Listen($port_path,$netaddr);
         Open a blocking TCP listner as below.
@@ -135,7 +139,6 @@ DEPENDENCIES
 EXPORT_OK
             open_UDP
             open_udpNB
-            bind2pp
             open_Listen
             open_listenNB
             connectBlk

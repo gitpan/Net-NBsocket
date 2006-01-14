@@ -13,12 +13,11 @@ use AutoLoader 'AUTOLOAD';
 require Exporter;
 @ISA = qw(Exporter);
 
-$VERSION = do { my @r = (q$Revision: 0.10 $ =~ /\d+/g); sprintf "%d."."%02d" x $#r, @r };
+$VERSION = do { my @r = (q$Revision: 0.11 $ =~ /\d+/g); sprintf "%d."."%02d" x $#r, @r };
 
 @EXPORT_OK = qw(
 	open_UDP
 	open_udpNB
-	bind2pp
 	open_Listen
 	open_listenNB
 	connectBlk
@@ -51,7 +50,6 @@ Net::NBsocket -- Non-Blocking Sockets
   use Net::NBsocket qw(
 	open_UDP
 	open_udpNB
-	bind2pp
 	open_Listen
 	open_listenNB
 	connectBlk
@@ -68,7 +66,7 @@ Net::NBsocket -- Non-Blocking Sockets
 
   $sock = open_UDP();
   $sock = open_udpNB();
-  $sock = bind2pp($sock,$port_path,$netaddr);
+  DEPRECATED $sock = bind2pp($sock,$port_path,$netaddr);
   $listener = open_Listen($port_path,$netaddr);
   $listener = open_listenNB($port_path,$netaddr);
   $rv = set_NB(*SOCK);
@@ -133,7 +131,7 @@ sub open_udpNB {
   return undef;
 }
 
-=item * $sock = bind2pp($sock,$port_path,$netaddr);
+=item * DEPRECATED $sock=bind2pp($sock,$port_path,$netaddr);
 
 Bind to $port_path and an optional IPv4 bind address as returned by inet_aton
 (defaults to INADDR_ANY).
@@ -141,6 +139,10 @@ Bind to $port_path and an optional IPv4 bind address as returned by inet_aton
   input:	port or unix domain socket path,
 		[optional] bind address
   returns:	socket on sucess, else undef;
+
+Author's note: This function was not well thought out and is now deprecated. It may be
+removed in future versions and is no longer in the EXPORT_OK array though it
+is still in the module and may be accessed with Net::NBsocket::bind2pp();
 
 =cut
 
@@ -335,7 +337,6 @@ sub _accept {
 
 	open_UDP
         open_udpNB
-	bind2pp
 	open_Listen
 	open_listenNB
 	connectBlk
