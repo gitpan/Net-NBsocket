@@ -2,7 +2,7 @@
 
 package Net::NBsocket;
 use strict;
-use diagnostics;
+#use diagnostics;
 
 use vars qw(
 	$VERSION @ISA @EXPORT_OK $UDP $TCP
@@ -13,7 +13,7 @@ use AutoLoader 'AUTOLOAD';
 require Exporter;
 @ISA = qw(Exporter);
 
-$VERSION = do { my @r = (q$Revision: 0.11 $ =~ /\d+/g); sprintf "%d."."%02d" x $#r, @r };
+$VERSION = do { my @r = (q$Revision: 0.12 $ =~ /\d+/g); sprintf "%d."."%02d" x $#r, @r };
 
 @EXPORT_OK = qw(
 	open_UDP

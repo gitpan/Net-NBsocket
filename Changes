@@ -1,5 +1,8 @@
 Revision history for Perl extension Net::NBsocket
 
+0.12  Thu Feb  2 16:55:10 PST 2006
+	oops! forgot to comment out #use diagnostics;
+
 0.11  Fri Jan 13 21:59:02 PST 2006
 	DEPRECATE bind2pp()
 
