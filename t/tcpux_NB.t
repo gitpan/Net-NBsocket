@@ -50,7 +50,7 @@ foreach my $dir (qw(tmp)) {
 my $dir = `pwd`;
 do { chop $dir } while ($dir =~ /\s$/);
 $dir .= '/tmp';
-mkdir $dir;
+mkdir $dir,0755;
 
 my $filename = &{sub{(caller())[1]}};
 

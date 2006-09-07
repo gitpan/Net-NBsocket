@@ -13,7 +13,7 @@ use AutoLoader 'AUTOLOAD';
 require Exporter;
 @ISA = qw(Exporter);
 
-$VERSION = do { my @r = (q$Revision: 0.12 $ =~ /\d+/g); sprintf "%d."."%02d" x $#r, @r };
+$VERSION = do { my @r = (q$Revision: 0.13 $ =~ /\d+/g); sprintf "%d."."%02d" x $#r, @r };
 
 @EXPORT_OK = qw(
 	open_UDP
@@ -196,7 +196,7 @@ sub open_Listen {
   $sockok = bind2pp(*LSOCK,$port_path,$addr) if $sockok;
   return $sockok if $sockok &&
         listen($sockok,SOMAXCONN);
-  close $sockok;
+  close $sockok if $sockok;
   return undef;
 }
 

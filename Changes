@@ -1,5 +1,8 @@
 Revision history for Perl extension Net::NBsocket
 
+0.13  Thu Sep  7 16:27:41 PDT 2006
+   perl 5.053 updates for backward compatibility
+
 0.12  Thu Feb  2 16:55:10 PST 2006
 	oops! forgot to comment out #use diagnostics;
 
