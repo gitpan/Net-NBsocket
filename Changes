@@ -1,5 +1,8 @@
 Revision history for Perl extension Net::NBsocket
 
+0.14  Sun Oct 12 17:24:32 PDT 2008
+	support missing F_GETFL and F_SETFL in windows
+
 0.13  Thu Sep  7 16:27:41 PDT 2006
    perl 5.053 updates for backward compatibility
 

@@ -13,7 +13,7 @@ use AutoLoader 'AUTOLOAD';
 require Exporter;
 @ISA = qw(Exporter);
 
-$VERSION = do { my @r = (q$Revision: 0.13 $ =~ /\d+/g); sprintf "%d."."%02d" x $#r, @r };
+$VERSION = do { my @r = (q$Revision: 0.14 $ =~ /\d+/g); sprintf "%d."."%02d" x $#r, @r };
 
 @EXPORT_OK = qw(
 	open_UDP
@@ -219,8 +219,13 @@ Set a socket to Non-Blocking mode
 
 sub set_NB {
   my $sock = shift;
-  my $flags = fcntl($sock,F_GETFL(),0);
-  fcntl($sock,F_SETFL(),$flags | O_NONBLOCK())
+  if (defined $POSIX::{F_GETFL}) {
+    my $flags = fcntl($sock,F_GETFL(),0);
+    fcntl($sock,F_SETFL(),$flags | O_NONBLOCK())
+  } else {	# must be a windows box
+#    my $FIONBIO = 0x8004667e;
+    ioctl($sock,0x8004667e,1);
+  }
 }
 
 =item $rv = set_so_linger(*HANDLE,$seconds);
