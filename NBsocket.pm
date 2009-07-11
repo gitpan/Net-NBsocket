@@ -13,7 +13,7 @@ use AutoLoader 'AUTOLOAD';
 require Exporter;
 @ISA = qw(Exporter);
 
-$VERSION = do { my @r = (q$Revision: 0.14 $ =~ /\d+/g); sprintf "%d."."%02d" x $#r, @r };
+$VERSION = do { my @r = (q$Revision: 0.15 $ =~ /\d+/g); sprintf "%d."."%02d" x $#r, @r };
 
 @EXPORT_OK = qw(
 	open_UDP
@@ -262,12 +262,12 @@ $netaddr is unused for unix domain sockets.
 
 sub connectBlk {
   unshift @_,1;
-  goto &_connect;
+  &_connect;
 }
 
 sub  connect_NB {
   unshift @_,0;
-  goto &_connect;
+  &_connect;
 }
 
 sub _connect {
@@ -310,12 +310,12 @@ the unix domain socket path if PF_INET or PF_UNIX respectively.
 
 sub accept_NB {
   unshift @_,0;
-  goto &_accept;
+  &_accept;
 }
 
 sub accept_Blk {
   unshift @_,1;
-  goto &_accept;
+  &_accept;
 }
 
 sub _accept {
