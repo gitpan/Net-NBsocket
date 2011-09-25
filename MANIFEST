@@ -1,9 +1,12 @@
 MANIFEST
+MANIFEST.SKIP
 README
 Makefile.PL
 NBsocket.pm
 Changes
+Artistic
 GPL
+t/dyn_bind.t
 t/import.t
 t/inet_sock.t
 t/open_udpNB.t

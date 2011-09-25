@@ -13,7 +13,7 @@ use AutoLoader 'AUTOLOAD';
 require Exporter;
 @ISA = qw(Exporter);
 
-$VERSION = do { my @r = (q$Revision: 0.15 $ =~ /\d+/g); sprintf "%d."."%02d" x $#r, @r };
+$VERSION = do { my @r = (q$Revision: 0.16 $ =~ /\d+/g); sprintf "%d."."%02d" x $#r, @r };
 
 @EXPORT_OK = qw(
 	open_UDP
@@ -30,6 +30,7 @@ $VERSION = do { my @r = (q$Revision: 0.15 $ =~ /\d+/g); sprintf "%d."."%02d" x $
 	inet_ntoa
 	sockaddr_in
 	sockaddr_un
+	dyn_bind
 );
 
 # used a lot, create once per session
@@ -62,6 +63,7 @@ Net::NBsocket -- Non-Blocking Sockets
 	inet_ntoa
 	sockaddr_in
 	sockaddr_un
+	dyn_bind
   );
 
   $sock = open_UDP();
@@ -81,6 +83,7 @@ Net::NBsocket -- Non-Blocking Sockets
   ($port,$netaddr) = sockaddr_in($sin);
   $sun = sockaddr_un($path);
   ($path) = sockaddr_un($sun);
+  $port = dyn_bind($sock,$iaddr);
 
 =head1 DESCRIPTION
 
@@ -304,8 +307,6 @@ the unix domain socket path if PF_INET or PF_UNIX respectively.
 		unix domain socket path
 		or an emtpy array on failure
 
-=back
-
 =cut
 
 sub accept_NB {
@@ -333,6 +334,29 @@ sub _accept {
   return ();
 }
 
+=item * $port = dyn_bind($sock,$iaddr);
+
+Attempt to bind a socket to the IP address and the first available
+dynamic assigned port, in the range 49152 through 65535. Fails after
+100 attempts
+
+  input:	socket
+		netaddr as returned by inet_aton
+  returns:	port number or undef
+
+=back
+
+=cut
+
+sub dyn_bind {  # t => s_make_kid_Dbind.t
+  my($sock,$iaddr) = @_;
+  foreach(1..100) {
+    my $port = 49152 + int rand(65536 - 49152);
+    return $port if bind($sock,sockaddr_in($port,$iaddr));
+  }
+  return undef;
+}
+
 =head1 DEPENDENCIES
 
 	POSIX
@@ -354,27 +378,46 @@ sub _accept {
 	inet_ntoa
 	sockaddr_in
 	sockaddr_un
+	dyn_bind
 
 =head1 AUTHOR
 
 Michael Robinton, michael@bizsystems.com
 
-=head1 COPYRIGHT
+=head1 COPYRIGHT 2004 - 2011
 
-Copyright 2004 - 2006, Michael Robinton & BizSystems
+Michael Robinton
+
+All rights reserved.
+
 This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or 
-(at your option) any later version.
+it under the terms of either:
+
+  a) the GNU General Public License as published by the Free
+  Software Foundation; either version 2, or (at your option) any
+  later version, or
+
+  b) the "Artistic License" which comes with this distribution.
 
 This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of 
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the  
-GNU General Public License for more details.
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See either
+the GNU General Public License or the Artistic License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+You should have received a copy of the Artistic License with this
+distribution, in the file named "Artistic".  If not, I'll be glad to provide
+one.
+
+You should also have received a copy of the GNU General Public License
+along with this program in the file named "Copying". If not, write to the
+
+        Free Software Foundation, Inc.
+        59 Temple Place, Suite 330
+        Boston, MA  02111-1307, USA
+
+or visit their web page on the internet at:
+
+        http://www.gnu.org/copyleft/gpl.html.
 
 =head1 SEE ALSO
 
