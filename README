@@ -37,7 +37,7 @@ SYNOPSIS
       ($port,$netaddr) = sockaddr_in($sin);
       $sun = sockaddr_un($path);
       ($path) = sockaddr_un($sun);
-      $port = dyn_bind($sock,$iaddr);
+      $port = dyn_bind($sock,$netaddr);
 
 DESCRIPTION
     Net::NBsocket provides a wrapper for Socket to supply Non-Blocking
@@ -134,13 +134,13 @@ DESCRIPTION
                         unix domain socket path
                         or an emtpy array on failure
 
-    * $port = dyn_bind($sock,$iaddr);
+    * $port = dyn_bind($sock,$netaddr);
         Attempt to bind a socket to the IP address and randomly assigned
         port number, in the range 49152 through 65535. Fails after 100
         attempts
 
           input:        socket
-                        iaddr as returned by sockaddr_in
+                        netaddr as returned by inet_aton
           returns:      port number or undef
 
 DEPENDENCIES

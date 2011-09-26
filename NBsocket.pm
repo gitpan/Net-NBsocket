@@ -13,7 +13,7 @@ use AutoLoader 'AUTOLOAD';
 require Exporter;
 @ISA = qw(Exporter);
 
-$VERSION = do { my @r = (q$Revision: 0.17 $ =~ /\d+/g); sprintf "%d."."%02d" x $#r, @r };
+$VERSION = do { my @r = (q$Revision: 0.18 $ =~ /\d+/g); sprintf "%d."."%02d" x $#r, @r };
 
 @EXPORT_OK = qw(
 	open_UDP
@@ -83,7 +83,7 @@ Net::NBsocket -- Non-Blocking Sockets
   ($port,$netaddr) = sockaddr_in($sin);
   $sun = sockaddr_un($path);
   ($path) = sockaddr_un($sun);
-  $port = dyn_bind($sock,$iaddr);
+  $port = dyn_bind($sock,$netaddr);
 
 =head1 DESCRIPTION
 
@@ -334,13 +334,13 @@ sub _accept {
   return ();
 }
 
-=item * $port = dyn_bind($sock,$iaddr);
+=item * $port = dyn_bind($sock,$netaddr);
 
 Attempt to bind a socket to the IP address and randomly assigned
 port number, in the range 49152 through 65535. Fails after 100 attempts
 
   input:	socket
-		iaddr as returned by sockaddr_in
+		netaddr as returned by inet_aton
   returns:	port number or undef
 
 =back
@@ -348,10 +348,10 @@ port number, in the range 49152 through 65535. Fails after 100 attempts
 =cut
 
 sub dyn_bind {  # t => s_make_kid_Dbind.t
-  my($sock,$iaddr) = @_;
+  my($sock,$netaddr) = @_;
   foreach(1..100) {
     my $port = 49152 + int rand(65536 - 49152);
-    return $port if bind($sock,sockaddr_in($port,$iaddr));
+    return $port if bind($sock,sockaddr_in($port,$netaddr));
   }
   return undef;
 }
