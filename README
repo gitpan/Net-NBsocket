@@ -135,12 +135,12 @@ DESCRIPTION
                         or an emtpy array on failure
 
     * $port = dyn_bind($sock,$iaddr);
-        Attempt to bind a socket to the IP address and the first available
-        dynamic assigned port, in the range 49152 through 65535. Fails after
-        100 attempts
+        Attempt to bind a socket to the IP address and randomly assigned
+        port number, in the range 49152 through 65535. Fails after 100
+        attempts
 
           input:        socket
-                        netaddr as returned by inet_aton
+                        iaddr as returned by sockaddr_in
           returns:      port number or undef
 
 DEPENDENCIES

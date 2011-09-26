@@ -1,5 +1,8 @@
 Revision history for Perl extension Net::NBsocket
 
+0.17  Sun Sep 25 17:29:13 PDT 2011
+	fix typo in dyn_bind documentation
+
 0.16  Sun Sep 25 16:07:42 PDT 2011
 	add function and test for dyn_bind
 

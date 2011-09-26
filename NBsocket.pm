@@ -13,7 +13,7 @@ use AutoLoader 'AUTOLOAD';
 require Exporter;
 @ISA = qw(Exporter);
 
-$VERSION = do { my @r = (q$Revision: 0.16 $ =~ /\d+/g); sprintf "%d."."%02d" x $#r, @r };
+$VERSION = do { my @r = (q$Revision: 0.17 $ =~ /\d+/g); sprintf "%d."."%02d" x $#r, @r };
 
 @EXPORT_OK = qw(
 	open_UDP
@@ -336,12 +336,11 @@ sub _accept {
 
 =item * $port = dyn_bind($sock,$iaddr);
 
-Attempt to bind a socket to the IP address and the first available
-dynamic assigned port, in the range 49152 through 65535. Fails after
-100 attempts
+Attempt to bind a socket to the IP address and randomly assigned
+port number, in the range 49152 through 65535. Fails after 100 attempts
 
   input:	socket
-		netaddr as returned by inet_aton
+		iaddr as returned by sockaddr_in
   returns:	port number or undef
 
 =back
