@@ -21,10 +21,28 @@ use Net::NBsocket qw(
         accept_NB
         set_NB
         set_so_linger
+        dyn_bind
         inet_aton
         inet_ntoa
         sockaddr_in
         sockaddr_un
+        inet_pton  
+        inet_ntop
+        ipv6_aton
+        ipv6_n2x
+        ipv6_n2d
+        INADDR_ANY
+        INADDR_BROADCAST
+        INADDR_LOOPBACK
+        INADDR_NONE
+        in6addr_any
+        in6addr_loopback
+        AF_INET
+        AF_INET6
+        havesock6
+        isupport6
+        pack_sockaddr_in6
+        unpack_sockaddr_in6
 );
 
 $loaded = 1;

@@ -167,7 +167,7 @@ while(time < $expire) {
     print "unknown size of data from client = $_\nnot "
 	unless ($_ = sysread($clone,$rbuf,512)) == length($wbuf);
     print "ok 10\n"; ++$test;
-    print "got: $_, exp: $wbuf\nnot "
+    print "got: $rbuf, exp: $wbuf\nnot "
 	unless $rbuf eq $wbuf;
     print "ok 11\n"; ++$test;
     last;

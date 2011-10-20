@@ -1,5 +1,16 @@
 Revision history for Perl extension Net::NBsocket
 
+0.21  Mon Oct 17 23:45:21 PDT 2011
+	add support for IPv6 - many changes
+
+0.20  not released
+
+0.19  Thu Sep 29 17:56:36 PDT 2011
+	use Symbol::gensym for socket globs everywhere
+
+	modify accept_xxx to return scalar or array
+	depending on calling context
+
 0.18  Sun Sep 25 17:41:07 PDT 2011
 	this time "really" fix the type in dyn_bind documentation
 

@@ -11,6 +11,9 @@ my $module = $& .'.pm';
 WriteMakefile(
     'NAME'		=> $pkg,
     'VERSION_FROM'	=> $module, # finds $VERSION
+    'PREREQ_PM'		=> {
+			NetAddr::IP		=> 4.049
+			},
     'clean'		=> { FILES    => "*~ tmp*"},
     'dist'		=> {COMPRESS=>'gzip', SUFFIX=>'gz'}
 );
