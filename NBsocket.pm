@@ -41,7 +41,7 @@ require Exporter;
 
 @ISA = qw(Exporter);
 
-$VERSION = do { my @r = (q$Revision: 0.21 $ =~ /\d+/g); sprintf "%d."."%02d" x $#r, @r };
+$VERSION = do { my @r = (q$Revision: 0.22 $ =~ /\d+/g); sprintf "%d."."%02d" x $#r, @r };
 
 # dynamic configuration for this HOST
 
@@ -319,7 +319,7 @@ sub open_UDP {
   my $AF = shift;
   $AF = AF_INET() unless $AF;
   my $usock = do { local *SOCK; };
-  return bless ($usock) if socket($usock,$AF,SOCK_DGRAM(),UDP());
+  return ($usock) if socket($usock,$AF,SOCK_DGRAM(),UDP());
   close $usock if $usock;
   return undef;
 }

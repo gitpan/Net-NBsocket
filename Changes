@@ -1,5 +1,8 @@
 Revision history for Perl extension Net::NBsocket
 
+0.22  Tue Apr 30 17:12:38 PDT 2013
+	removed spurious 'bless' statement in open_UDP
+
 0.21  Mon Oct 17 23:45:21 PDT 2011
 	add support for IPv6 - many changes
 
