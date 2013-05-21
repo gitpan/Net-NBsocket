@@ -41,13 +41,17 @@ require Exporter;
 
 @ISA = qw(Exporter);
 
-$VERSION = do { my @r = (q$Revision: 0.22 $ =~ /\d+/g); sprintf "%d."."%02d" x $#r, @r };
+$VERSION = do { my @r = (q$Revision: 0.23 $ =~ /\d+/g); sprintf "%d."."%02d" x $#r, @r };
 
 # dynamic configuration for this HOST
 
 # used a lot, create once per session
-$UDP = getprotobyname('udp');
-$TCP = getprotobyname('tcp');
+# SEGFAULTS with Apache mod_perl
+#$UDP = getprotobyname('udp');
+#$TCP = getprotobyname('tcp');
+
+$UDP = 17;
+$TCP = 6;
 
 my $havesock6 = 0;
 my $isupport6 = 0;
