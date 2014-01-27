@@ -1,5 +1,8 @@
 Revision history for Perl extension Net::NBsocket
 
+0.24  Mon Jan 27 11:59:58 PST 2014
+        modify Makefile.PL to bypass missing 'pod2text'
+
 0.23  Tue May 21 14:41:34 PDT 2013
 	remove getprotobyname which causes a 
 	segfault with Apache mod_perl, replace

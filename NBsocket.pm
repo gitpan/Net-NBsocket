@@ -41,7 +41,7 @@ require Exporter;
 
 @ISA = qw(Exporter);
 
-$VERSION = do { my @r = (q$Revision: 0.23 $ =~ /\d+/g); sprintf "%d."."%02d" x $#r, @r };
+$VERSION = do { my @r = (q$Revision: 0.24 $ =~ /\d+/g); sprintf "%d."."%02d" x $#r, @r };
 
 # dynamic configuration for this HOST
 
@@ -729,7 +729,7 @@ If Socket6 is not loaded, returns and empty array.
 
 Michael Robinton, michael@bizsystems.com
 
-=head1 COPYRIGHT 2004 - 2011
+=head1 COPYRIGHT 2004 - 2014
 
 Michael Robinton
 
